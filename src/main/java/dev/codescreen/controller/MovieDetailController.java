@@ -9,6 +9,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.codescreen.handler.MediaDbInternalServerException;
 import dev.codescreen.model.MovieRequestModel;
 import dev.codescreen.service.MediaDbService;
 
@@ -25,7 +26,7 @@ public class MovieDetailController {
 	
 	@GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> searchMovie(
-			MovieRequestModel request) {
+			MovieRequestModel request) throws MediaDbInternalServerException {
 		
 		LOGGER.info("Accepting request from /movies");
 		

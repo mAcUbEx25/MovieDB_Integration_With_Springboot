@@ -9,6 +9,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.codescreen.handler.MediaDbInternalServerException;
 import dev.codescreen.model.ShowRequestModel;
 import dev.codescreen.service.MediaDbService;
 
@@ -24,7 +25,7 @@ public class ShowDetailController {
 	}
 
 	@GetMapping(value = "/shows", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> searchShow(ShowRequestModel request) {
+	public ResponseEntity<?> searchShow(ShowRequestModel request) throws MediaDbInternalServerException {
 
 		LOGGER.info("Accepting request from /shows");
 

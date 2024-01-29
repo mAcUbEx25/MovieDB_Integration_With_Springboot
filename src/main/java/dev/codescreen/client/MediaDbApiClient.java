@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import dev.codescreen.handler.MediaDbInternalServerException;
 import dev.codescreen.model.MediaDbListResponse;
 import dev.codescreen.model.MediaDbResponse;
 import dev.codescreen.properties.MovieDbApiProperties;
@@ -42,7 +43,7 @@ public class MediaDbApiClient {
 		this.properties = properties;
 	}
 
-	public MediaDbListResponse searchMovie(String title) {
+	public MediaDbListResponse searchMovie(String title) throws MediaDbInternalServerException {
 
 		Map<String, String> params = initializeParameters();
 		params.put(TITLE_KEY_PARAM, title);
@@ -51,7 +52,7 @@ public class MediaDbApiClient {
 
 		MediaDbListResponse response = null;
 
-		ResponseEntity<MediaDbListResponse> result = this.restTemplate.exchange(properties.getSearchMoviesEndpoint(),
+		ResponseEntity<MediaDbListResponse> result = sendRequest(properties.getSearchMoviesEndpoint(),
 				HttpMethod.GET, httpEntity, MediaDbListResponse.class, params);
 
 		if (result.getStatusCode().is2xxSuccessful()) {
@@ -61,7 +62,7 @@ public class MediaDbApiClient {
 		return response;
 	}
 
-	public MediaDbResponse searchMovieById(Integer id) {
+	public MediaDbResponse searchMovieById(Integer id) throws MediaDbInternalServerException {
 
 		Map<String, String> params = initializeParameters();
 		params.put(MOVIE_ID_KEY_PARAM, id.toString());
@@ -70,7 +71,7 @@ public class MediaDbApiClient {
 
 		MediaDbResponse response = null;
 
-		ResponseEntity<MediaDbResponse> result = this.restTemplate.exchange(properties.getMovieIdEndpoint(),
+		ResponseEntity<MediaDbResponse> result = sendRequest(properties.getMovieIdEndpoint(),
 				HttpMethod.GET, httpEntity, MediaDbResponse.class, params);
 
 		if (result.getStatusCode().is2xxSuccessful()) {
@@ -81,7 +82,7 @@ public class MediaDbApiClient {
 
 	}
 
-	public MediaDbListResponse searchShows(String name) {
+	public MediaDbListResponse searchShows(String name) throws MediaDbInternalServerException {
 
 		Map<String, String> params = initializeParameters();
 		params.put(NAME_KEY_PARAM, name);
@@ -90,7 +91,7 @@ public class MediaDbApiClient {
 
 		MediaDbListResponse response = null;
 
-		ResponseEntity<MediaDbListResponse> result = this.restTemplate.exchange(properties.getSearchShowsEndpoint(),
+		ResponseEntity<MediaDbListResponse> result = sendRequest(properties.getSearchShowsEndpoint(),
 				HttpMethod.GET, httpEntity, MediaDbListResponse.class, params);
 
 		if (result.getStatusCode().is2xxSuccessful()) {
@@ -106,7 +107,7 @@ public class MediaDbApiClient {
 		return new HttpEntity<>(null, httpHeaders);
 	}
 
-	public MediaDbResponse searchShowById(Integer id) {
+	public MediaDbResponse searchShowById(Integer id) throws MediaDbInternalServerException {
 
 		Map<String, String> params = initializeParameters();
 		params.put(SHOW_ID_KEY_PARAM, id.toString());
@@ -115,7 +116,8 @@ public class MediaDbApiClient {
 
 		MediaDbResponse response = null;
 
-		ResponseEntity<MediaDbResponse> result = sendRequest(properties.getShowIdEndpoint(), HttpMethod.GET, httpEntity,
+		ResponseEntity<MediaDbResponse> result = sendRequest(properties.getShowIdEndpoint(), 
+				HttpMethod.GET, httpEntity,
 				MediaDbResponse.class, params);
 
 		if (result.getStatusCode().is2xxSuccessful()) {
@@ -134,7 +136,7 @@ public class MediaDbApiClient {
 
 	@SuppressWarnings("rawtypes")
 	private <T> ResponseEntity<T> sendRequest(String uriTemplate, HttpMethod requestMethod, HttpEntity requestExtras,
-			Class<T> returnClass, Map<String, String> uriParameters) {
+			Class<T> returnClass, Map<String, String> uriParameters) throws MediaDbInternalServerException {
 
 		ResponseEntity<T> response = null;
 
@@ -142,7 +144,9 @@ public class MediaDbApiClient {
 			response = this.restTemplate.exchange(uriTemplate, requestMethod, requestExtras, returnClass,
 					uriParameters);
 		} catch (RestClientException ex) {
-			LOGGER.error(String.format("An error occured while calling %s.", uriTemplate), ex);
+			MediaDbInternalServerException exception = new MediaDbInternalServerException(ex);
+			LOGGER.error(String.format("An error occured while calling %s.", uriTemplate), exception);
+			throw exception;
 
 		}
 
