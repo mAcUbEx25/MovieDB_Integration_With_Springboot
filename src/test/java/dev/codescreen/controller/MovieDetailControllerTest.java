@@ -1,6 +1,5 @@
 package dev.codescreen.controller;
 
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

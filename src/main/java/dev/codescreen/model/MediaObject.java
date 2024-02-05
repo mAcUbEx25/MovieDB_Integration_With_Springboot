@@ -2,15 +2,24 @@ package dev.codescreen.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+/**
+ * Class container for show or movie data.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MediaObject {
 
+	@Schema(description = "The movie or show id.")
 	private Integer id;
 
+	@Schema(description = "The movie's release date or the show's first air date.")
 	private String date;
 
+	@Schema(description = "The movie's title or show's name.")
 	private String name;
 
+	@Schema(description = "The movie or show popularity.")
 	private Float rating;
 
 	public Integer getId() {

@@ -19,6 +19,9 @@ import dev.codescreen.model.MediaDbListResponse;
 import dev.codescreen.model.MediaDbResponse;
 import dev.codescreen.properties.MovieDbApiProperties;
 
+/**
+ * Client class to handler request to themoviedb.org.
+ */
 @Component
 public class MediaDbApiClient {
 
@@ -52,8 +55,8 @@ public class MediaDbApiClient {
 
 		MediaDbListResponse response = null;
 
-		ResponseEntity<MediaDbListResponse> result = sendRequest(properties.getSearchMoviesEndpoint(),
-				HttpMethod.GET, httpEntity, MediaDbListResponse.class, params);
+		ResponseEntity<MediaDbListResponse> result = sendRequest(properties.getSearchMoviesEndpoint(), HttpMethod.GET,
+				httpEntity, MediaDbListResponse.class, params);
 
 		if (result.getStatusCode().is2xxSuccessful()) {
 			response = result.getBody();
@@ -71,8 +74,8 @@ public class MediaDbApiClient {
 
 		MediaDbResponse response = null;
 
-		ResponseEntity<MediaDbResponse> result = sendRequest(properties.getMovieIdEndpoint(),
-				HttpMethod.GET, httpEntity, MediaDbResponse.class, params);
+		ResponseEntity<MediaDbResponse> result = sendRequest(properties.getMovieIdEndpoint(), HttpMethod.GET,
+				httpEntity, MediaDbResponse.class, params);
 
 		if (result.getStatusCode().is2xxSuccessful()) {
 			response = result.getBody();
@@ -91,8 +94,8 @@ public class MediaDbApiClient {
 
 		MediaDbListResponse response = null;
 
-		ResponseEntity<MediaDbListResponse> result = sendRequest(properties.getSearchShowsEndpoint(),
-				HttpMethod.GET, httpEntity, MediaDbListResponse.class, params);
+		ResponseEntity<MediaDbListResponse> result = sendRequest(properties.getSearchShowsEndpoint(), HttpMethod.GET,
+				httpEntity, MediaDbListResponse.class, params);
 
 		if (result.getStatusCode().is2xxSuccessful()) {
 			response = result.getBody();
@@ -116,8 +119,7 @@ public class MediaDbApiClient {
 
 		MediaDbResponse response = null;
 
-		ResponseEntity<MediaDbResponse> result = sendRequest(properties.getShowIdEndpoint(), 
-				HttpMethod.GET, httpEntity,
+		ResponseEntity<MediaDbResponse> result = sendRequest(properties.getShowIdEndpoint(), HttpMethod.GET, httpEntity,
 				MediaDbResponse.class, params);
 
 		if (result.getStatusCode().is2xxSuccessful()) {

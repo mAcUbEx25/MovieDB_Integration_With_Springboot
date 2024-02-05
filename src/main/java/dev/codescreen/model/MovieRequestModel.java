@@ -2,15 +2,25 @@ package dev.codescreen.model;
 
 import java.io.Serializable;
 
+import org.springdoc.core.annotations.ParameterObject;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.Parameter;
+
+/**
+ * Class to contain parameter values from /movies request.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ParameterObject
 public class MovieRequestModel implements Serializable {
 
 	private static final long serialVersionUID = 6085656019063981442L;
 
+	@Parameter(name = "The id of the movie.",required = false)
 	private Integer id;
 
+	@Parameter(name = "The title of the movie.", required = false)
 	private String title;
 
 	public Integer getId() {

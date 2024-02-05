@@ -2,6 +2,9 @@ package dev.codescreen.handler;
 
 import java.util.UUID;
 
+/**
+ * Custom exception for InternServerException.
+ */
 public class MediaDbInternalServerException extends Exception {
 
 	private static final long serialVersionUID = 545324525736110709L;

@@ -2,6 +2,9 @@ package dev.codescreen.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Class representation of themoviedb.org API properties.
+ */
 @ConfigurationProperties(prefix = "api.external.themoviedb")
 public class MovieDbApiProperties {
 	

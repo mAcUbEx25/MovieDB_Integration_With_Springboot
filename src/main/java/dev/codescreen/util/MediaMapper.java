@@ -11,7 +11,10 @@ import dev.codescreen.model.MediaDbResponse;
 import dev.codescreen.model.MediaObject;
 import dev.codescreen.model.ResultObject;
 
-public class MediaMapper{
+/**
+ * Class used for mapping the API client's object to MediaObject.
+ */
+public class MediaMapper {
 
 	private MediaMapper() {
 
@@ -26,7 +29,7 @@ public class MediaMapper{
 
 		} else {
 			results = new ArrayList<>();
-			
+
 		}
 
 		return results;
