@@ -56,7 +56,7 @@ public class MovieDetailController {
 		ResponseEntity<?> response = null;
 
 		if (!ObjectUtils.isEmpty(request.getTitle())) {
-			response = new ResponseEntity<>(service.searchMovies(request.getTitle()), HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<>(service.searchMovies(request.getTitle()), HttpStatus.OK);
 
 		} else if (!ObjectUtils.isEmpty(request.getId())) {
 			response = new ResponseEntity<>(service.searchMovie(request.getId()), HttpStatus.OK);
