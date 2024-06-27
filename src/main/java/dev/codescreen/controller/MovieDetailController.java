@@ -7,7 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.codescreen.handler.MediaDbInternalServerException;
@@ -15,7 +14,6 @@ import dev.codescreen.model.MediaObject;
 import dev.codescreen.model.MovieRequestModel;
 import dev.codescreen.service.MediaDbService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -58,7 +56,7 @@ public class MovieDetailController {
 		ResponseEntity<?> response = null;
 
 		if (!ObjectUtils.isEmpty(request.getTitle())) {
-			response = new ResponseEntity<>(service.searchMovies(request.getTitle()), HttpStatus.OK);
+			response = new ResponseEntity<>(service.searchMovies(request.getTitle()), HttpStatus.BAD_REQUEST);
 
 		} else if (!ObjectUtils.isEmpty(request.getId())) {
 			response = new ResponseEntity<>(service.searchMovie(request.getId()), HttpStatus.OK);
